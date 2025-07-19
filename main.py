@@ -8,7 +8,6 @@ class DIFFICULTY(Enum):
     HARD = {"name": "Hard", "guesses": 3}
 
 
-
 class Game:
     MIN_NUMBER = 1
     MAX_NUMBER = 100
@@ -41,7 +40,6 @@ class Game:
             except ValueError:
                 print("Please choose a valid difficulty level: 1, 2, or 3.")
 
-
     def get_valid_guess(self):
         while True:
             try:
@@ -60,7 +58,6 @@ class Game:
         else:
             print(f"\nIncorrect! The number is greater than {guess}")
 
-
     def display_remaining_guesses(self):
 
         remaining = self.total_guesses - self.guesses_made
@@ -68,7 +65,7 @@ class Game:
             print(f"\nYou have {remaining} guess{"es" if remaining != 1 else ""} remaining.\n")
 
     def play_round(self):
-        self.secret_number = randint(self.MIN_NUMBER, self.MAX_NUMBER+1)
+        self.secret_number = randint(self.MIN_NUMBER, self.MAX_NUMBER + 1)
         self.guesses_made = 0
         self.total_guesses = self.difficulty_level.value["guesses"]
 
@@ -103,7 +100,6 @@ class Game:
             else:
                 print("Please enter 'y' for yes or 'n' for no.")
 
-
     def run(self):
         self.display_welcome()
         self.difficulty_level = self.get_difficulty_level()
@@ -116,7 +112,6 @@ class Game:
 
 
 def main():
-
     game = Game()
     game.run()
 
