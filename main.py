@@ -1,5 +1,6 @@
 from random import randint
 from enum import Enum
+from datetime import datetime
 
 
 class DIFFICULTY(Enum):
@@ -64,6 +65,16 @@ class Game:
         if remaining > 0:
             print(f"\nYou have {remaining} guess{"es" if remaining != 1 else ""} remaining.\n")
 
+
+    def display_play_time(self, start, stop):
+
+        play_time = stop - start
+        seconds = divmod(play_time.seconds, 60)
+        if seconds[0] > 0:
+            print(f"\nYou finished the game in {seconds[0]} minutes and {seconds[1]} seconds.")
+        else:
+            print(f"\nYou finished the game in {seconds[1]} seconds.")
+
     def play_round(self):
         self.secret_number = randint(self.MIN_NUMBER, self.MAX_NUMBER + 1)
         self.guesses_made = 0
@@ -80,9 +91,8 @@ class Game:
                 print(f"You guessed the secret number in {self.guesses_made} guesses!")
                 return True
 
-            self.display_hint(guess)
-
             if self.guesses_made < self.total_guesses:
+                self.display_hint(guess)
                 self.display_remaining_guesses()
 
         print(f"\nYou are out of guesses! The secret number was {self.secret_number}.")
@@ -105,7 +115,11 @@ class Game:
         self.difficulty_level = self.get_difficulty_level()
 
         while True:
+            start_time = datetime.now()
             self.play_round()
+            end_time = datetime.now()
+
+            self.display_play_time(start_time, end_time)
 
             if not self.play_again():
                 break
